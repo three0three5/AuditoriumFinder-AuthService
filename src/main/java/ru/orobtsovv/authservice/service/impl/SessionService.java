@@ -14,6 +14,7 @@ import ru.orobtsovv.authservice.exception.account.RefreshExpiredException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,5 +65,23 @@ public class SessionService {
         int affected = refreshRepository.removeAllActive(userid);
         log.info("Logout all for %d; affected %d sessions".formatted(userid, affected));
         return new CommonDTO("logout_all");
+    }
+
+    public void removeAllActiveSessions(String refreshToken) {
+        Optional<RefreshTokenEntity> optional = refreshRepository.findById(refreshToken);
+        if (optional.isEmpty()) return;
+        removeAllActiveSessions(optional.get().getAccountEntity().getUserId());
+    }
+
+    @Transactional
+    public void removeActiveSession(String refreshToken) {
+        Optional<RefreshTokenEntity> optional = refreshRepository.findById(refreshToken);
+        if (optional.isEmpty()) return;
+        RefreshTokenEntity entity = optional.get();
+        if (entity.getUsedAt() != null) {
+            removeAllActiveSessions(entity.getAccountEntity().getUserId());
+            return;
+        }
+        refreshRepository.delete(entity);
     }
 }

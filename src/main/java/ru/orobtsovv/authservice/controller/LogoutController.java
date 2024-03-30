@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
         "удалить все хранимые у себя токены, ассоциированные с аккаунтом")
 @RequestMapping("/logout")
 public interface LogoutController {
-    @Operation(summary = "Удаление всех сессий аккаунта")
+    @Operation(summary = "Удаление всех сессий аккаунта", description = "Необходимо " +
+            "передать refresh токен")
     @DeleteMapping("/all")
-    ResponseEntity<Void> logoutAll(@RequestParam String jwt);
+    ResponseEntity<Void> logoutAll(@RequestParam String refreshToken);
 
-    @Operation(summary = "Удаление текущей сессии")
+    @Operation(summary = "Удаление текущей сессии", description = "Передается refresh токен; " +
+            "если токен уже был использован, logout производится для всех сессий")
     @DeleteMapping
-    ResponseEntity<Void> logout(@RequestParam String jwt);
+    ResponseEntity<Void> logout(@RequestParam String refreshToken);
 }
