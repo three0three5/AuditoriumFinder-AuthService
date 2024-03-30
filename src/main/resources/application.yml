@@ -1,9 +1,15 @@
+services:
+  user:
+    url: ${USER_SERVICE_URL:http://localhost:56789}
+  email-sender:
+    url: ${EMAIL_SENDER_URL:http://localhost:30303}}
+
 spring:
   profiles:
     active: ${SPRING_PROFILE:with-mocks}
   jpa:
     hibernate:
-      ddl-auto: create # TODO только для тестов
+      ddl-auto: update
     properties:
       hibernate:
         order_by.default_null_ordering: last
@@ -30,11 +36,11 @@ server:
 
 email-params:
   code:
-    lifespan-seconds: 60
-    length: 8
+    lifespan-seconds: ${EMAIL_CODE_LIFESPAN:60}
+    length: ${EMAIL_CODE_LENGTH:8}
 auth-params:
   refresh:
-    lifespan-days: 7
-    length: 128
+    lifespan-days: ${REFRESH_LIFESPAN:7}
+    length: ${REFRESH_LENGTH:128}
   jwt:
-    lifespan-seconds: 120
+    lifespan-seconds: ${JWT_LIFESPAN:120}

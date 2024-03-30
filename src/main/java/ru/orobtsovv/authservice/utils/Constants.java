@@ -16,4 +16,5 @@ public class Constants {
     public static final String ACCOUNT_EXISTS_CONFLICT = "Аккаунт уже существует";
     public static final String ACCOUNT_NOT_FOUND = "Неправильный email или пароль";
     public static final String WRONG_PASSWORD = "Неправильный email или пароль";
+    public static final String REFRESH_EXPIRED = "Session expired";
 }

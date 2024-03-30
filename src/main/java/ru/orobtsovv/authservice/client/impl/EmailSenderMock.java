@@ -7,7 +7,7 @@ import ru.orobtsovv.authservice.client.EmailSenderClient;
 
 @Service
 @Slf4j
-@Profile("with-mocks")
+@Profile({"with-mocks", "email-mock"})
 public class EmailSenderMock implements EmailSenderClient {
     @Override
     public void send(String email, String code) {

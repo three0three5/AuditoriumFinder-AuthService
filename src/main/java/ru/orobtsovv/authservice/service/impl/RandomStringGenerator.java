@@ -20,7 +20,4 @@ public class RandomStringGenerator {
         return sb.toString();
     }
 
-    public static String generateRandomString() {
-        return generateRandomString(128);
-    }
 }

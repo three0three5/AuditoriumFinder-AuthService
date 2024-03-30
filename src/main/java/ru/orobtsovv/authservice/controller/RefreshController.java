@@ -12,8 +12,8 @@ import ru.orobtsovv.authservice.dto.TokenResponse;
 @RequestMapping("/refresh")
 public interface RefreshController {
     @Operation(summary = "Получение новой пары токенов",
-            description = "Если refresh производится для телеграм-сессии, " +
-                    "прошлая телеграмм сессия удаляется")
+            description = "Если refresh производится по уже использованному токену, производится " +
+                    "полный logout")
     @PostMapping
     ResponseEntity<TokenResponse> refreshToken(@RequestParam String token);
 }

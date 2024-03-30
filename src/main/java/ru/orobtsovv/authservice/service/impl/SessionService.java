@@ -1,19 +1,23 @@
 package ru.orobtsovv.authservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.RefreshTokenEntity;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
+import ru.orobtsovv.authservice.dto.CommonDTO;
 import ru.orobtsovv.authservice.dto.TokenResponse;
 import ru.orobtsovv.authservice.utils.AuthProperties;
+import ru.orobtsovv.authservice.exception.account.RefreshExpiredException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SessionService {
     private final AuthProperties authProperties;
     private final RefreshRepository refreshRepository;
@@ -22,7 +26,7 @@ public class SessionService {
     @Transactional
     public TokenResponse newSession(AccountEntity accountEntity, boolean isTelegram) {
         if (isTelegram) {
-            refreshRepository.deleteTelegramSession(accountEntity.getUserId());
+            refreshRepository.deleteActiveTelegramSession(accountEntity.getUserId());
         }
         RefreshTokenEntity tokenEntity = new RefreshTokenEntity()
                 .setRefreshValue(RandomStringGenerator.generateRandomString(authProperties.getRefreshLength()))
@@ -38,5 +42,27 @@ public class SessionService {
                 .setUserid(accountEntity.getUserId())
                 .setRefresh(tokenEntity.getRefreshValue())
                 .setJwt(jwt);
+    }
+
+    @Transactional(noRollbackFor = {RefreshExpiredException.class})
+    public TokenResponse refresh(String token) {
+        RefreshTokenEntity tokenEntity = refreshRepository.findById(token)
+                .orElseThrow(RefreshExpiredException::new);
+        log.info("refreshing for " + tokenEntity.getAccountEntity().getUserId());
+        if (tokenEntity.getValidUntil().isBefore(LocalDateTime.now()))
+            throw new RefreshExpiredException();
+        if (tokenEntity.getUsedAt() != null) {
+            removeAllActiveSessions(tokenEntity.getAccountEntity().getUserId());
+            throw new RefreshExpiredException();
+        }
+        tokenEntity.setUsedAt(LocalDateTime.now());
+        refreshRepository.save(tokenEntity);
+        return newSession(tokenEntity.getAccountEntity(), tokenEntity.isTelegramSession());
+    }
+
+    public CommonDTO removeAllActiveSessions(int userid) {
+        int affected = refreshRepository.removeAllActive(userid);
+        log.info("Logout all for %d; affected %d sessions".formatted(userid, affected));
+        return new CommonDTO("logout_all");
     }
 }

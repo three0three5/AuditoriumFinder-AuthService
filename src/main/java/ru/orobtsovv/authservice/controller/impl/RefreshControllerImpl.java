@@ -8,15 +8,15 @@ import ru.orobtsovv.authservice.controller.RefreshController;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
 import ru.orobtsovv.authservice.dto.TokenResponse;
 import ru.orobtsovv.authservice.service.impl.JwtService;
+import ru.orobtsovv.authservice.service.impl.SessionService;
 
 @RestController
 @RequiredArgsConstructor
 public class RefreshControllerImpl implements RefreshController {
-    private final JwtService jwtService;
-    private final RefreshRepository refreshRepository;
+    private final SessionService sessionService;
 
     @Override
     public ResponseEntity<TokenResponse> refreshToken(String token) {
-        throw new NotImplementedException();
+        return ResponseEntity.ok(sessionService.refresh(token));
     }
 }

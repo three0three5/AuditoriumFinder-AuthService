@@ -1,7 +1,6 @@
 package ru.orobtsovv.authservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;

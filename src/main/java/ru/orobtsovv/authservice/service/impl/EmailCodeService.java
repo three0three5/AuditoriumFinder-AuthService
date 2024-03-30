@@ -37,5 +37,6 @@ public class EmailCodeService {
                 .findById(email)
                 .orElseThrow(EmailCodeExpiredException::new);
         if (!codeEntity.getCode().equals(code)) throw new EmailCodeNotValidException();
+        codeRepository.delete(codeEntity);
     }
 }

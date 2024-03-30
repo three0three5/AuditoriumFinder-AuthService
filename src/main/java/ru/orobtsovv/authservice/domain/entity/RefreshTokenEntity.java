@@ -19,13 +19,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-@Table(name = "refresh")
+@Table(name = "_refresh")
 public class RefreshTokenEntity {
     @Id
     @Column(name = "refresh_value", nullable = false)
     private String refreshValue;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "userid", referencedColumnName="userid")
     private AccountEntity accountEntity;
 
@@ -34,4 +34,7 @@ public class RefreshTokenEntity {
 
     @Column(name = "is_tg")
     private boolean isTelegramSession;
+
+    @Column(name = "used_at")
+    private LocalDateTime usedAt;
 }
