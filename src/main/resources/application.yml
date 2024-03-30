@@ -1,10 +1,11 @@
 spring:
+  profiles:
+    active: ${SPRING_PROFILE:with-mocks}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create # TODO только для тестов
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         order_by.default_null_ordering: last
         format_sql: true
         default_schema: public
@@ -18,6 +19,22 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
 server:
   servlet:
     context-path: /auth
+
+email-params:
+  code:
+    lifespan-seconds: 60
+    length: 8
+auth-params:
+  refresh:
+    lifespan-days: 7
+    length: 128
+  jwt:
+    lifespan-seconds: 120
