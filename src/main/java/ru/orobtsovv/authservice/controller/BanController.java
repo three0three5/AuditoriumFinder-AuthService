@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.orobtsovv.authservice.dto.BanRequest;
 
-import java.time.LocalDateTime;
-
 @Tag(name = "Ban API", description = "Операции исключительно для UserService")
 @RequestMapping("/banned")
 public interface BanController {
@@ -24,5 +22,5 @@ public interface BanController {
     @PostMapping("/delete")
     @Operation(summary = "Удаление пользователя из забаненных",
             description = "Почта пользователя выносится из черного списка.")
-    ResponseEntity<Void> unbanUser(@RequestParam String email);
+    ResponseEntity<Void> unbanUser(@RequestParam String email, @RequestParam int moderatorId);
 }

@@ -3,32 +3,24 @@ package ru.orobtsovv.authservice.dto.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
-import ru.orobtsovv.authservice.domain.entity.BannedEmailEntity;
-import ru.orobtsovv.authservice.domain.repository.BlacklistRepository;
-import ru.orobtsovv.authservice.exception.account.BannedException;
+import org.springframework.stereotype.Component;
+import ru.orobtsovv.authservice.service.impl.BlacklistService;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static ru.orobtsovv.authservice.utils.Constants.EMAIL_REGEX;
 
+@Component
 @RequiredArgsConstructor
 public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
-    private final BlacklistRepository blacklistRepository;
+    private final BlacklistService service;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return value != null && value.length() <= 32 && emailRegex(value) && blacklistedCheck(value);
+        return value != null && value.length() <= 32 && emailRegex(value) && service.check(value);
     }
 
     private boolean emailRegex(String email) {
         return Pattern.matches(EMAIL_REGEX, email);
-    }
-
-    private boolean blacklistedCheck(String email) {
-        Optional<BannedEmailEntity> optional = blacklistRepository.findValidByEmail(email);
-        if (optional.isPresent())
-            throw new BannedException(optional.get().getReason(), optional.get().getBannedUntil());
-        return true;
     }
 }

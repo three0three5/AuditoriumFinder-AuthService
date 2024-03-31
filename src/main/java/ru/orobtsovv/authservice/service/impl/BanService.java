@@ -36,7 +36,8 @@ public class BanService {
     }
 
     @Transactional
-    public void unbanUser(String email) {
+    public void unbanUser(String email, int moderatorId) {
+        log.info("Whitelisted %s by moderator %d".formatted(email, moderatorId));
         blacklistRepository.deleteById(email);
     }
 }
