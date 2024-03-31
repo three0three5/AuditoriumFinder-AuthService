@@ -2,10 +2,15 @@ package ru.orobtsovv.authservice.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.orobtsovv.authservice.dto.BanRequest;
+
+import java.time.LocalDateTime;
 
 @Tag(name = "Ban API", description = "Операции исключительно для UserService")
 @RequestMapping("/banned")
@@ -14,7 +19,7 @@ public interface BanController {
             "Если срок бана пользователя заканчивается, " +
             "пользователь может зарегистрироваться со своей почтой снова.")
     @PostMapping("/add")
-    ResponseEntity<Void> banUser(@RequestParam int userid);
+    ResponseEntity<Void> banUser(@Valid @RequestBody BanRequest banRequest);
 
     @PostMapping("/delete")
     @Operation(summary = "Удаление пользователя из забаненных",

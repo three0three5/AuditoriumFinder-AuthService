@@ -1,8 +1,8 @@
 services:
   user:
-    url: ${USER_SERVICE_URL:http://localhost:56789}
+    url: ${USER_SERVICE_URL:http://localhost:port-example}
   email-sender:
-    url: ${EMAIL_SENDER_URL:http://localhost:30303}}
+    url: ${EMAIL_SENDER_URL:http://localhost:port-example}}
 
 spring:
   profiles:

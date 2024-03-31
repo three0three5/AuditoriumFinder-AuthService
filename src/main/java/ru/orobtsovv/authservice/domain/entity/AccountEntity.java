@@ -29,12 +29,6 @@ public class AccountEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "is_banned")
-    private boolean isBanned;
-
-    @Column(name = "banned_until")
-    private LocalDateTime bannedUntil;
-
     @Column(name = "hashed_pwd")
     private String hashedPassword;
 

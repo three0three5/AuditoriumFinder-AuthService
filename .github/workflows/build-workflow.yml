@@ -1,0 +1,48 @@
+name: build-workflow
+run-name: ${{ github.actor }} ${{ github.event_name }}
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "release" ]
+
+env:
+  docker-tag: ${{ github.head_ref || github.ref_name }}-${GITHUB_SHA::7}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run Maven clean install
+        run: mvn clean install
+
+      - name: Build Docker image
+        run: docker build --tag ${{ secrets.DOCKERHUB_USERNAME }}/audf/auth-service:${{ env.docker-tag }} .
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push the image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/audf/auth-service:${{ env.docker-tag }}
+
+      - name: Tag Docker image as latest
+        run: |
+          docker image tag \
+            ${{ secrets.DOCKERHUB_USERNAME }}/audf/auth-service:${{ env.docker-tag }} \
+            ${{ secrets.DOCKERHUB_USERNAME }}/audf/auth-service:latest
+        if: github.ref == 'refs/heads/release'
+
+      - name: Push latest image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/audf/auth-service:latest
+        if: github.ref == 'refs/heads/release'
+
+    outputs:
+      docker-tag: ${{ env.docker-tag }}

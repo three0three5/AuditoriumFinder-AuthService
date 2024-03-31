@@ -14,10 +14,10 @@ public interface LogoutController {
     @Operation(summary = "Удаление всех сессий аккаунта", description = "Необходимо " +
             "передать refresh токен")
     @DeleteMapping("/all")
-    ResponseEntity<Void> logoutAll(@RequestParam String refreshToken);
+    ResponseEntity<Void> logoutAll(@RequestParam(name = "refresh_token") String refreshToken);
 
     @Operation(summary = "Удаление текущей сессии", description = "Передается refresh токен; " +
             "если токен уже был использован, logout производится для всех сессий")
     @DeleteMapping
-    ResponseEntity<Void> logout(@RequestParam String refreshToken);
+    ResponseEntity<Void> logout(@RequestParam(name = "refresh_token") String refreshToken);
 }

@@ -8,6 +8,8 @@ import ru.orobtsovv.authservice.client.UserServiceClient;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.AccountRole;
 import ru.orobtsovv.authservice.domain.repository.AccountRepository;
+import ru.orobtsovv.authservice.dto.CommonDTO;
+import ru.orobtsovv.authservice.dto.PasswordChangeRequest;
 import ru.orobtsovv.authservice.dto.ProfileCreateRequest;
 import ru.orobtsovv.authservice.dto.SignUpRequest;
 import ru.orobtsovv.authservice.dto.SignUpTelegramRequest;

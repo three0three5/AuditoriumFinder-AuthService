@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.RefreshTokenEntity;
 
 @Repository
@@ -25,4 +26,6 @@ public interface RefreshRepository extends JpaRepository<RefreshTokenEntity, Str
             "and r.usedAt is null " +
             "and r.validUntil > current_timestamp")
     int removeAllActive(int userid);
+
+    int deleteAllByAccountEntity(AccountEntity account);
 }
