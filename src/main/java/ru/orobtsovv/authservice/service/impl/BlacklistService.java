@@ -14,7 +14,7 @@ public class BlacklistService {
     private final BlacklistRepository repository;
 
     public boolean check(String email) {
-        Optional<BannedEmailEntity> optional = repository.findById(email);
+        Optional<BannedEmailEntity> optional = repository.findValidByEmail(email);
         if (optional.isEmpty()) return true;
         throw new BannedException(optional.get().getReason(), optional.get().getBannedUntil());
     }
