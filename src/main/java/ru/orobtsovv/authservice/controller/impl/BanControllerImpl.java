@@ -30,6 +30,6 @@ public class BanControllerImpl implements BanController {
 
     @Override
     public ResponseEntity<List<BannedEmailResponse>> getListOfBanned() {
-        throw new NotImplementedException(); // TODO
+        return ResponseEntity.ok(banService.getAll());
     }
 }
