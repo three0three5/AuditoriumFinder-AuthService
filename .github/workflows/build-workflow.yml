@@ -71,11 +71,17 @@ jobs:
           docker image tag \
             ${{ secrets.DOCKERHUB_USERNAME }}/audf-authservice:${{ env.docker-tag }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/audf-authservice:latest
-        if: github.ref == 'refs/heads/release'
+        if: ${{ github.event_name == 'pull_request' && 
+          github.event.action == 'closed' && 
+          github.event.pull_request.merged == true && 
+          github.event.pull_request.base.ref == 'release' }}
 
       - name: Push latest image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/audf-authservice:latest
-        if: github.ref == 'refs/heads/release'
+        if: ${{ github.event_name == 'pull_request' && 
+          github.event.action == 'closed' && 
+          github.event.pull_request.merged == true && 
+          github.event.pull_request.base.ref == 'release' }}
 
     outputs:
       docker-tag: ${{ env.docker-tag }}
