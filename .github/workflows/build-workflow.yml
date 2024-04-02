@@ -36,7 +36,9 @@ jobs:
   autotests:
     runs-on: ubuntu-latest
     needs: [build]
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' && 
+      github.event.action == 'open' && 
+      github.event.pull_request.base.ref == 'release' }}
     steps:
       - run: |
           echo Autotest run
