@@ -16,7 +16,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && 
       github.event.action == 'closed' && 
       github.event.pull_request.merged == true && 
-      github.event.pull_request.base.ref == 'Release' }}
+      github.event.pull_request.base.ref == 'release' }}
     steps:
     - name: Form Message
       id: form_message
