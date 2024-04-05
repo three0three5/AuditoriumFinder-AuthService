@@ -10,8 +10,8 @@ import ru.orobtsovv.authservice.domain.entity.BannedEmailEntity;
 import ru.orobtsovv.authservice.domain.repository.AccountRepository;
 import ru.orobtsovv.authservice.domain.repository.BlacklistRepository;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
-import ru.orobtsovv.authservice.dto.BanRequest;
 import ru.orobtsovv.authservice.dto.BannedEmailResponse;
+import ru.orobtsovv.authservice.dto.event.ProfileDeleteEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +25,17 @@ public class BanService {
     private final BlacklistRepository blacklistRepository;
     private final AccountRepository accountRepository;
 
-    @Transactional
-    public void banUser(BanRequest request) {
-        Optional<AccountEntity> optional = accountRepository.findById(request.getUserid());
+    @Transactional // TODO читать из MQ
+    public void banUser(ProfileDeleteEvent event) {
+        Optional<AccountEntity> optional = accountRepository.findById(event.getUserid());
         if (optional.isEmpty()) return;
         refreshRepository.deleteAllByAccountEntity(optional.get());
-        accountRepository.deleteById(request.getUserid());
+        accountRepository.deleteById(event.getUserid());
         BannedEmailEntity entity = new BannedEmailEntity();
         entity.setEmail(optional.get().getEmail());
-        entity.setBannedUntil(request.getBannedUntil());
-        entity.setReason(request.getReason());
-        entity.setModeratorId(request.getModeratorId());
+        entity.setBannedUntil(event.getBannedUntil());
+        entity.setReason(event.getReason());
+        entity.setModeratorId(event.getModeratorId());
         blacklistRepository.save(entity);
     }
 
