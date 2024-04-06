@@ -15,7 +15,7 @@ public class BanControllerImpl implements BanController {
     private final BanService banService;
 
     @Override
-    public ResponseEntity<Void> unbanUser(String email, int moderatorId) {
+    public ResponseEntity<Void> unbanUser(int moderatorId, String email) {
         banService.unbanUser(email, moderatorId);
         return ResponseEntity.ok().build();
     }

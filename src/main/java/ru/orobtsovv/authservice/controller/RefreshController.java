@@ -14,6 +14,6 @@ public interface RefreshController {
     @Operation(summary = "Получение новой пары токенов",
             description = "Если refresh производится по уже использованному токену, производится " +
                     "полный logout")
-    @PostMapping
+    @PostMapping("/")
     ResponseEntity<TokenResponse> refreshToken(@RequestParam String token);
 }

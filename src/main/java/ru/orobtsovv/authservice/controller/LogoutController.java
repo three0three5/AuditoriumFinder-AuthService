@@ -18,6 +18,6 @@ public interface LogoutController {
 
     @Operation(summary = "Удаление текущей сессии", description = "Передается refresh токен; " +
             "если токен уже был использован, logout производится для всех сессий")
-    @DeleteMapping
+    @DeleteMapping("/")
     ResponseEntity<Void> logout(@RequestParam(name = "refresh_token") String refreshToken);
 }

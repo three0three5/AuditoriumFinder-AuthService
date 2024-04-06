@@ -16,7 +16,7 @@ import ru.orobtsovv.authservice.dto.TokenResponse;
 public interface SignUpController {
     @Operation(description = "Регистрация пользователей, прошедших " +
             "верификацию электронной почты")
-    @PostMapping
+    @PostMapping("/")
     ResponseEntity<TokenResponse> signUp(@Valid @RequestBody SignUpRequest request);
 
     @Operation(description = "Регистрация пользователей, прошедших " +
