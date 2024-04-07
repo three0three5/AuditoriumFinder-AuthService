@@ -9,6 +9,6 @@ public class ProfileCreateRequest {
     private Integer id;
     private String nickname;
     private String email;
-    private String telegramHandler;
+    private String telegramHandle;
 }
 

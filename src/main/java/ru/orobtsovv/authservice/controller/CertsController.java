@@ -11,6 +11,6 @@ import ru.orobtsovv.authservice.dto.RsaPublicKeyResponse;
 @RequestMapping("/certs")
 public interface CertsController {
     @Operation(summary = "Публичный ключ подписи jwt")
-    @GetMapping
+    @GetMapping("/")
     ResponseEntity<RsaPublicKeyResponse> getPublicSignatureKey();
 }

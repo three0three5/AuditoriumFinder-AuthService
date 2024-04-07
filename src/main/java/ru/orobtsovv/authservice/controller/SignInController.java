@@ -15,7 +15,7 @@ import ru.orobtsovv.authservice.dto.TokenResponse;
 @RequestMapping("/signin")
 public interface SignInController {
     @Operation(summary = "Вход в аккаунт")
-    @PostMapping
+    @PostMapping("/")
     ResponseEntity<TokenResponse> signIn(@Valid @RequestBody SignInRequest request);
 
     @Operation(summary = "Вход в аккаунт из телеграм бота",

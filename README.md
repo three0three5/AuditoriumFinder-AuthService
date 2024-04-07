@@ -24,8 +24,7 @@ DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
 
 REDIS_HOST, REDIS_PORT
 
-USER_SERVICE_URL - обязательно, если не используется with-mocks значение 
-переменной SPRING_PROFILE, иначе не используется
+RABBITMQ_HOST, RABBITMQ_PORT - хост и порт rabbitmq; по умолчанию localhost и 5672
 
 EMAIL_SENDER_URL - обязательно, если не используется with-mocks или email-mock значение SPRING_PROFILE, иначе
 не используется
@@ -33,3 +32,5 @@ EMAIL_SENDER_URL - обязательно, если не используетс�
 #### Пример запуска требуемых контейнеров
 
 `docker run -p 6379:6379 --name auth-redis -d redis`
+
+`docker run -d -p 5672:5672 -p 15672:15672 --name my-rabbit rabbitmq:3-management`

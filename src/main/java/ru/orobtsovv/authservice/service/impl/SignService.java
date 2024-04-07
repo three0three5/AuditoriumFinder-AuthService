@@ -34,7 +34,7 @@ public class SignService {
         return accountService.createNewTgAccount(request);
     }
 
-    public TokenResponse signUp(SignUpRequest request) { // TODO check blacklisted emails
+    public TokenResponse signUp(SignUpRequest request) {
         codeService.verifyEmail(request.getEmail(), request.getEmailCode());
         Optional<AccountEntity> optionalAccount = accountRepository.findByEmail(request.getEmail());
         if (optionalAccount.isPresent()) {

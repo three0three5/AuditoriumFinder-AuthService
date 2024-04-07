@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.orobtsovv.authservice.client.UserServiceClient;
+import ru.orobtsovv.authservice.client.AsyncUserServiceClient;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.AccountRole;
 import ru.orobtsovv.authservice.domain.repository.AccountRepository;
@@ -18,7 +18,7 @@ import ru.orobtsovv.authservice.dto.TokenResponse;
 public class AccountService {
     private final SessionService sessionService;
     private final AccountRepository accountRepository;
-    private final UserServiceClient userServiceClient;
+    private final AsyncUserServiceClient userServiceClient;
     private final PasswordEncoder encoder;
 
     @Transactional
@@ -33,7 +33,7 @@ public class AccountService {
                 .setEmail(request.getEmail())
                 .setId(toSave.getUserId())
                 .setNickname(request.getNickname())
-                .setTelegramHandler(request.getTelegramHandle()));
+                .setTelegramHandle(request.getTelegramHandle()));
         return result;
     }
 
