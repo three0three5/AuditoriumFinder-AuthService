@@ -1,6 +1,4 @@
 services:
-  user:
-    url: ${USER_SERVICE_URL:http://localhost:port-example}
   email-sender:
     url: ${EMAIL_SENDER_URL:http://localhost:port-example}}
 

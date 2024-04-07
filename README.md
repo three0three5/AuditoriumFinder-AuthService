@@ -32,3 +32,5 @@ EMAIL_SENDER_URL - обязательно, если не используетс�
 #### Пример запуска требуемых контейнеров
 
 `docker run -p 6379:6379 --name auth-redis -d redis`
+
+`docker run -d -p 5672:5672 -p 15672:15672 --name my-rabbit rabbitmq:3-management`

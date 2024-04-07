@@ -19,6 +19,7 @@ public class UserServiceListener {
     @Transactional
     @RabbitListener(queues = PROFILE_DELETE_AUTH)
     public void onProfileDelete(ProfileDeleteMessage message) {
+        log.info("On profile delete: %s".formatted(message));
         banService.banUser(message);
     }
 }

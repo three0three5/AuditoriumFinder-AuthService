@@ -29,7 +29,8 @@ public class BanService {
     public void banUser(ProfileDeleteMessage event) {
         Optional<AccountEntity> optional = accountRepository.findById(event.getUserid());
         if (optional.isEmpty()) return;
-        refreshRepository.deleteAllByAccountEntity(optional.get());
+        int affected = refreshRepository.deleteAllByAccountEntity(optional.get());
+        log.info("deleted refresh: %d".formatted(affected));
         accountRepository.deleteById(event.getUserid());
         BannedEmailEntity entity = new BannedEmailEntity();
         entity.setEmail(optional.get().getEmail());
