@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.orobtsovv.authservice.client.AsyncUserServiceClient;
+import ru.orobtsovv.authservice.client.impl.UserServiceMQ;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.RefreshTokenEntity;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
@@ -23,6 +25,7 @@ public class SessionService {
     private final AuthProperties authProperties;
     private final RefreshRepository refreshRepository;
     private final JwtService jwtService;
+    private final AsyncUserServiceClient userServiceClient;
 
     @Transactional
     public TokenResponse newSession(AccountEntity accountEntity, boolean isTelegram) {
@@ -81,6 +84,9 @@ public class SessionService {
         if (entity.getUsedAt() != null) {
             removeAllActiveSessions(entity.getAccountEntity().getUserId());
             return;
+        }
+        if (entity.isTelegramSession()) {
+            userServiceClient.removeTgHandle(entity.getAccountEntity().getUserId());
         }
         refreshRepository.delete(entity);
     }

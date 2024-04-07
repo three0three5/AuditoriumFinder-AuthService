@@ -11,7 +11,7 @@ import ru.orobtsovv.authservice.domain.repository.AccountRepository;
 import ru.orobtsovv.authservice.domain.repository.BlacklistRepository;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
 import ru.orobtsovv.authservice.dto.BannedEmailResponse;
-import ru.orobtsovv.authservice.dto.event.ProfileDeleteEvent;
+import ru.orobtsovv.authservice.dto.message.ProfileDeleteMessage;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +25,8 @@ public class BanService {
     private final BlacklistRepository blacklistRepository;
     private final AccountRepository accountRepository;
 
-    @Transactional // TODO читать из MQ
-    public void banUser(ProfileDeleteEvent event) {
+    @Transactional
+    public void banUser(ProfileDeleteMessage event) {
         Optional<AccountEntity> optional = accountRepository.findById(event.getUserid());
         if (optional.isEmpty()) return;
         refreshRepository.deleteAllByAccountEntity(optional.get());

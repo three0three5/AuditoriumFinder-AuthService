@@ -1,11 +1,11 @@
-package ru.orobtsovv.authservice.dto.event;
+package ru.orobtsovv.authservice.dto.message;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class ProfileDeleteEvent {
+public class ProfileDeleteMessage {
     private int userid;
     private int moderatorId;
     private LocalDateTime bannedUntil;

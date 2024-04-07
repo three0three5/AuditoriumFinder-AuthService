@@ -30,6 +30,10 @@ spring:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
 
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}  # RabbitMQ server host
+    port: ${RABBITMQ_PORT:5672}       # RabbitMQ server port
+
 server:
   servlet:
     context-path: /auth
@@ -44,3 +48,9 @@ auth-params:
     length: ${REFRESH_LENGTH:128}
   jwt:
     lifespan-seconds: ${JWT_LIFESPAN:120}
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
