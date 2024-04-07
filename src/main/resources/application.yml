@@ -1,6 +1,6 @@
 services:
   email-sender:
-    url: ${EMAIL_SENDER_URL:http://localhost:port-example}}
+    url: ${EMAIL_SENDER_URL:http://localhost:port-example}
 
 spring:
   profiles:
