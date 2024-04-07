@@ -5,14 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.authservice.client.AsyncUserServiceClient;
-import ru.orobtsovv.authservice.client.impl.UserServiceMQ;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.RefreshTokenEntity;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
-import ru.orobtsovv.authservice.dto.CommonDTO;
 import ru.orobtsovv.authservice.dto.TokenResponse;
-import ru.orobtsovv.authservice.utils.AuthProperties;
 import ru.orobtsovv.authservice.exception.account.RefreshExpiredException;
+import ru.orobtsovv.authservice.utils.AuthProperties;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -64,10 +62,9 @@ public class SessionService {
         return newSession(tokenEntity.getAccountEntity(), tokenEntity.isTelegramSession());
     }
 
-    public CommonDTO removeAllActiveSessions(int userid) {
+    public void removeAllActiveSessions(int userid) {
         int affected = refreshRepository.removeAllActive(userid);
         log.info("Logout all for %d; affected %d sessions".formatted(userid, affected));
-        return new CommonDTO("logout_all");
     }
 
     public void removeAllActiveSessions(String refreshToken) {
