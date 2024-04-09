@@ -4,8 +4,7 @@
 
 SPRING_PROFILE - опционально; основные значения: with-mocks, development, email-mock;
 
-- with-mocks - все сервисы заменяются на заглушки (по умолчанию)
-- email-mock - сервис отправки email заменяется на заглушку
+- email-mock - сервис отправки email заменяется на заглушку (по умолч.)
 - development - без заглушек
 
 EMAIL_CODE_LIFESPAN - по умолчанию 60 (изм. в секундах)
