@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import ru.orobtsovv.authservice.dto.validator.ValidEmail;
 
-import static ru.orobtsovv.authservice.utils.Constants.TELEGRAM_PROVIDED;
-
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -20,6 +18,5 @@ public class SignInTelegramRequest {
     @ValidEmail
     private String email;
 
-    @NotBlank(message = TELEGRAM_PROVIDED)
     private String telegramHandle;
 }
