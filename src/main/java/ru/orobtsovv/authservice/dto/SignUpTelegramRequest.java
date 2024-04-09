@@ -20,7 +20,6 @@ public class SignUpTelegramRequest {
     @ValidEmail
     private String email;
 
-    @NotBlank(message = Constants.TELEGRAM_PROVIDED)
     private String telegramHandle;
 
     @NotBlank(message = Constants.NICKNAME_MESSAGE)

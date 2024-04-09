@@ -8,7 +8,6 @@ public class Constants {
     public static final String INVALID_EMAIL_MESSAGE = "Некорректный email";
     public static final String INVALID_PASSWORD_MESSAGE = "Пароль должен содержать не менее 8 символов, " +
             "содержать латинские символы в различных регистрах и хотя бы одну цифру";
-    public static final String TELEGRAM_PROVIDED = "Telegram handler should be provided";
     public static final String NICKNAME_MESSAGE = "Никнейм должен содержать не менее 2 символов";
     public static final String EMAIL_CODE_SENT = "Код отправлен";
     public static final String EMAIL_CODE_EXISTS_MESSAGE = "Код уже был отправлен";
