@@ -2,7 +2,7 @@ package ru.orobtsovv.authservice.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.orobtsovv.authservice.dto.RsaPublicKeyResponse;
+import ru.orobtsovv.authservice.dto.response.RsaPublicKeyResponse;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

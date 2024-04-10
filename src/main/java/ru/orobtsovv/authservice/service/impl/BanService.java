@@ -10,7 +10,7 @@ import ru.orobtsovv.authservice.domain.entity.BannedEmailEntity;
 import ru.orobtsovv.authservice.domain.repository.AccountRepository;
 import ru.orobtsovv.authservice.domain.repository.BlacklistRepository;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
-import ru.orobtsovv.authservice.dto.BannedEmailResponse;
+import ru.orobtsovv.authservice.dto.response.BannedEmailResponse;
 import ru.orobtsovv.authservice.dto.message.ProfileDeleteMessage;
 
 import java.util.List;

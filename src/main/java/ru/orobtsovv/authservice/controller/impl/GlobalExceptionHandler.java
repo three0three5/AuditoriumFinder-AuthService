@@ -6,7 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.orobtsovv.authservice.dto.BannedResponse;
+import ru.orobtsovv.authservice.dto.response.BannedResponse;
 import ru.orobtsovv.authservice.dto.CommonDTO;
 import ru.orobtsovv.authservice.exception.SimpleExceptionMessagesCreator;
 import ru.orobtsovv.authservice.exception.account.AccountException;

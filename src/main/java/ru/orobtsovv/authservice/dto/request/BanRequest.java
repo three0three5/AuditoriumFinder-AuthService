@@ -1,4 +1,4 @@
-package ru.orobtsovv.authservice.dto;
+package ru.orobtsovv.authservice.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

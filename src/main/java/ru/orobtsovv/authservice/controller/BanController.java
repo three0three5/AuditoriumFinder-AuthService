@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.orobtsovv.authservice.dto.BannedEmailResponse;
+import ru.orobtsovv.authservice.dto.response.BannedEmailResponse;
 
 import java.util.List;
 

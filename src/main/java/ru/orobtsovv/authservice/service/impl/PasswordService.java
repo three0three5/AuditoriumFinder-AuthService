@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.orobtsovv.authservice.domain.repository.AccountRepository;
 import ru.orobtsovv.authservice.dto.CommonDTO;
-import ru.orobtsovv.authservice.dto.PasswordChangeRequest;
+import ru.orobtsovv.authservice.dto.request.PasswordChangeRequest;
 
 import static ru.orobtsovv.authservice.utils.Constants.PASSWORD_UPDATED_RESPONSE;
 

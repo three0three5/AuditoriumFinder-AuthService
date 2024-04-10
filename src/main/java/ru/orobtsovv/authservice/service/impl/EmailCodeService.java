@@ -6,7 +6,7 @@ import ru.orobtsovv.authservice.client.EmailSenderClient;
 import ru.orobtsovv.authservice.domain.entity.EmailCodeEntity;
 import ru.orobtsovv.authservice.domain.redis.EmailCodeRepository;
 import ru.orobtsovv.authservice.dto.CommonDTO;
-import ru.orobtsovv.authservice.dto.EmailRequest;
+import ru.orobtsovv.authservice.dto.request.EmailRequest;
 import ru.orobtsovv.authservice.exception.email.EmailCodeExistsException;
 import ru.orobtsovv.authservice.exception.email.EmailCodeExpiredException;
 import ru.orobtsovv.authservice.exception.email.EmailCodeNotValidException;

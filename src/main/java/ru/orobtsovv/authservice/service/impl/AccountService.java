@@ -8,10 +8,10 @@ import ru.orobtsovv.authservice.client.AsyncUserServiceClient;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.AccountRole;
 import ru.orobtsovv.authservice.domain.repository.AccountRepository;
-import ru.orobtsovv.authservice.dto.ProfileCreateRequest;
-import ru.orobtsovv.authservice.dto.SignUpRequest;
-import ru.orobtsovv.authservice.dto.SignUpTelegramRequest;
-import ru.orobtsovv.authservice.dto.TokenResponse;
+import ru.orobtsovv.authservice.dto.request.ProfileCreateRequest;
+import ru.orobtsovv.authservice.dto.request.SignUpRequest;
+import ru.orobtsovv.authservice.dto.request.SignUpTelegramRequest;
+import ru.orobtsovv.authservice.dto.response.TokenResponse;
 
 @Service
 @RequiredArgsConstructor

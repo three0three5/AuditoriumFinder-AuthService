@@ -6,6 +6,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,14 +19,19 @@ import lombok.experimental.Accessors;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-@Table(name = "_account")
-public class AccountEntity {
+@Table(name = "student")
+public class StudentEntity {
     @Id
-    @GeneratedValue
-    @Column(name = "userid")
-    private int userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "userid", referencedColumnName="userid")
+    private AccountEntity userId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private AccountRole accountRole;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "hashed_pwd")
+    private String hashedPassword;
+
+    @Column(name = "tg_handle")
+    private String telegramHandle;
 }

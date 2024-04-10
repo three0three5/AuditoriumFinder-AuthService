@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.orobtsovv.authservice.dto.CommonDTO;
-import ru.orobtsovv.authservice.dto.EmailRequest;
+import ru.orobtsovv.authservice.dto.request.EmailRequest;
 
 @Tag(name = "Email Verifier API",
         description = "Эндпоинты для операций с электронной почтой")

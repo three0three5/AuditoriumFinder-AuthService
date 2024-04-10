@@ -8,7 +8,7 @@ import ru.orobtsovv.authservice.client.AsyncUserServiceClient;
 import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.RefreshTokenEntity;
 import ru.orobtsovv.authservice.domain.repository.RefreshRepository;
-import ru.orobtsovv.authservice.dto.TokenResponse;
+import ru.orobtsovv.authservice.dto.response.TokenResponse;
 import ru.orobtsovv.authservice.exception.account.RefreshExpiredException;
 import ru.orobtsovv.authservice.utils.AuthProperties;
 
@@ -32,7 +32,7 @@ public class SessionService {
         }
         RefreshTokenEntity tokenEntity = new RefreshTokenEntity()
                 .setRefreshValue(RandomStringGenerator.generateRandomString(authProperties.getRefreshLength()))
-                .setTelegramSession(isTelegram)
+                .setUniqueSession(isTelegram)
                 .setAccountEntity(accountEntity)
                 .setValidUntil(LocalDateTime.now().plusDays(authProperties.getRefreshLifespan()));
         tokenEntity = refreshRepository.save(tokenEntity);
@@ -59,7 +59,7 @@ public class SessionService {
         }
         tokenEntity.setUsedAt(LocalDateTime.now());
         refreshRepository.save(tokenEntity);
-        return newSession(tokenEntity.getAccountEntity(), tokenEntity.isTelegramSession());
+        return newSession(tokenEntity.getAccountEntity(), tokenEntity.isUniqueSession());
     }
 
     public void removeAllActiveSessions(int userid) {
@@ -82,7 +82,7 @@ public class SessionService {
             removeAllActiveSessions(entity.getAccountEntity().getUserId());
             return;
         }
-        if (entity.isTelegramSession()) {
+        if (entity.isUniqueSession()) {
             userServiceClient.removeTgHandle(entity.getAccountEntity().getUserId());
         }
         refreshRepository.delete(entity);

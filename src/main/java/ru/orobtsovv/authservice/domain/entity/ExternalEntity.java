@@ -11,29 +11,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-@Table(name = "_refresh")
-public class RefreshTokenEntity {
+@Table(name = "_external_account")
+public class ExternalEntity {
     @Id
-    @Column(name = "refresh_value", nullable = false)
-    private String refreshValue;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "userid", referencedColumnName="userid")
-    private AccountEntity accountEntity;
+    private AccountEntity userId;
 
-    @Column(name = "valid_until", nullable = false)
-    private LocalDateTime validUntil; // TODO шедулер
+    @Column(name = "client_id", nullable = false, unique = true)
+    private String clientId;
 
-    @Column(name = "is_unique")
-    private boolean isUniqueSession;
-
-    @Column(name = "used_at")
-    private LocalDateTime usedAt;
+    @Column(name = "hashed_secret")
+    private String clientSecret;
 }
