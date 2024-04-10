@@ -1,6 +1,6 @@
 package ru.orobtsovv.authservice.client;
 
-import ru.orobtsovv.authservice.dto.ProfileCreateRequest;
+import ru.orobtsovv.authservice.dto.request.ProfileCreateRequest;
 
 public interface AsyncUserServiceClient {
     void propagateHandle(int userid, String telegramHandle);

@@ -1,4 +1,4 @@
-package ru.orobtsovv.authservice.dto;
+package ru.orobtsovv.authservice.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

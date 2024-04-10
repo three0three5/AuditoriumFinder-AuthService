@@ -7,9 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.orobtsovv.authservice.dto.SignUpRequest;
-import ru.orobtsovv.authservice.dto.SignUpTelegramRequest;
-import ru.orobtsovv.authservice.dto.TokenResponse;
+import ru.orobtsovv.authservice.dto.request.SignUpRequest;
+import ru.orobtsovv.authservice.dto.request.SignUpTelegramRequest;
+import ru.orobtsovv.authservice.dto.response.TokenResponse;
 
 @Tag(name = "Sign Up API", description = "Регистрация")
 @RequestMapping("/signup")

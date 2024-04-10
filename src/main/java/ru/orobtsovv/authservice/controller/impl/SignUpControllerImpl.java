@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.orobtsovv.authservice.controller.SignUpController;
-import ru.orobtsovv.authservice.dto.SignUpRequest;
-import ru.orobtsovv.authservice.dto.SignUpTelegramRequest;
-import ru.orobtsovv.authservice.dto.TokenResponse;
+import ru.orobtsovv.authservice.dto.request.SignUpRequest;
+import ru.orobtsovv.authservice.dto.request.SignUpTelegramRequest;
+import ru.orobtsovv.authservice.dto.response.TokenResponse;
 import ru.orobtsovv.authservice.service.impl.SignService;
 
 @RestController

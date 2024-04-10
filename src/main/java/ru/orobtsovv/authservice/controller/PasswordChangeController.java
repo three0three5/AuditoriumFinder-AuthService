@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.orobtsovv.authservice.dto.CommonDTO;
-import ru.orobtsovv.authservice.dto.PasswordChangeRequest;
+import ru.orobtsovv.authservice.dto.request.PasswordChangeRequest;
 
 @RequestMapping("/pwd")
 @Tag(name = "Password reset API")

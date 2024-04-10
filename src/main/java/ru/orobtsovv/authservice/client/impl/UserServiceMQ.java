@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import ru.orobtsovv.authservice.client.AsyncUserServiceClient;
-import ru.orobtsovv.authservice.dto.ProfileCreateRequest;
+import ru.orobtsovv.authservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.authservice.dto.message.RemoveTelegramMessage;
 import ru.orobtsovv.authservice.dto.message.TelegramHandleMessage;
 

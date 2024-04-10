@@ -31,8 +31,8 @@ public class RefreshTokenEntity {
     @Column(name = "valid_until", nullable = false)
     private LocalDateTime validUntil; // TODO шедулер
 
-    @Column(name = "is_tg")
-    private boolean isTelegramSession;
+    @Column(name = "is_unique")
+    private boolean isUniqueSession;
 
     @Column(name = "used_at")
     private LocalDateTime usedAt;

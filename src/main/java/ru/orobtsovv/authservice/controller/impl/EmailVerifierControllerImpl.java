@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.orobtsovv.authservice.controller.EmailVerifierController;
 import ru.orobtsovv.authservice.dto.CommonDTO;
-import ru.orobtsovv.authservice.dto.EmailRequest;
+import ru.orobtsovv.authservice.dto.request.EmailRequest;
 import ru.orobtsovv.authservice.service.impl.EmailCodeService;
 
 @RestController
