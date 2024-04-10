@@ -16,6 +16,7 @@ spring:
     open-in-view: false
     show-sql: false
     generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:authservice}
@@ -31,6 +32,10 @@ spring:
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}  # RabbitMQ server host
     port: ${RABBITMQ_PORT:5672}       # RabbitMQ server port
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VIRTUAL_HOST:/}
+
 
 server:
   servlet:
