@@ -3,8 +3,8 @@ package ru.orobtsovv.authservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.orobtsovv.authservice.domain.entity.AccountEntity;
-import ru.orobtsovv.authservice.domain.repository.AccountRepository;
+import ru.orobtsovv.authservice.domain.entity.StudentEntity;
+import ru.orobtsovv.authservice.domain.repository.StudentRepository;
 import ru.orobtsovv.authservice.dto.request.SignInRequest;
 import ru.orobtsovv.authservice.dto.request.SignInTelegramRequest;
 import ru.orobtsovv.authservice.dto.request.SignUpRequest;
@@ -20,14 +20,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SignService {
     private final EmailCodeService codeService;
-    private final AccountRepository accountRepository;
+    private final StudentRepository studentRepository;
     private final AccountService accountService;
     private final PasswordEncoder encoder;
     private final SessionService sessionService;
 
     public TokenResponse signUp(SignUpTelegramRequest request) {
         codeService.verifyEmail(request.getEmail(), request.getEmailCode());
-        Optional<AccountEntity> optionalAccount = accountRepository.findByEmail(request.getEmail());
+        Optional<StudentEntity> optionalAccount = studentRepository.findByEmail(request.getEmail());
         if (optionalAccount.isPresent()) {
             return accountService.newSessionWithTelegram(optionalAccount.get(), request.getTelegramHandle());
         }
@@ -36,7 +36,7 @@ public class SignService {
 
     public TokenResponse signUp(SignUpRequest request) {
         codeService.verifyEmail(request.getEmail(), request.getEmailCode());
-        Optional<AccountEntity> optionalAccount = accountRepository.findByEmail(request.getEmail());
+        Optional<StudentEntity> optionalAccount = studentRepository.findByEmail(request.getEmail());
         if (optionalAccount.isPresent()) {
             throw new AccountExistsException();
         }
@@ -44,7 +44,7 @@ public class SignService {
     }
 
     public TokenResponse signIn(SignInRequest request) {
-        AccountEntity account = accountRepository
+        StudentEntity account = studentRepository
                 .findByEmail(request.getEmail())
                 .orElseThrow(AccountNotFoundException::new);
         if (!encoder.matches(request.getPassword(), account.getHashedPassword()))
@@ -54,7 +54,7 @@ public class SignService {
 
     public TokenResponse signInTg(SignInTelegramRequest request) {
         codeService.verifyEmail(request.getEmail(), request.getEmailCode());
-        AccountEntity account = accountRepository
+        StudentEntity account = studentRepository
                 .findByEmail(request.getEmail())
                 .orElseThrow(AccountNotFoundException::new);
         return accountService.newSessionWithTelegram(account, request.getTelegramHandle());

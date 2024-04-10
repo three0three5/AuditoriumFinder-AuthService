@@ -5,9 +5,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.authservice.client.AsyncUserServiceClient;
-import ru.orobtsovv.authservice.domain.entity.AccountEntity;
 import ru.orobtsovv.authservice.domain.entity.AccountRole;
-import ru.orobtsovv.authservice.domain.repository.AccountRepository;
+import ru.orobtsovv.authservice.domain.entity.StudentEntity;
+import ru.orobtsovv.authservice.domain.repository.StudentRepository;
 import ru.orobtsovv.authservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.authservice.dto.request.SignUpRequest;
 import ru.orobtsovv.authservice.dto.request.SignUpTelegramRequest;
@@ -17,21 +17,21 @@ import ru.orobtsovv.authservice.dto.response.TokenResponse;
 @RequiredArgsConstructor
 public class AccountService {
     private final SessionService sessionService;
-    private final AccountRepository accountRepository;
+    private final StudentRepository studentRepository;
     private final AsyncUserServiceClient userServiceClient;
     private final PasswordEncoder encoder;
 
     @Transactional
     public TokenResponse createNewTgAccount(SignUpTelegramRequest request) {
-        AccountEntity toSave = new AccountEntity()
-                .setEmail(request.getEmail())
+        StudentEntity student = new StudentEntity()
                 .setTelegramHandle(request.getTelegramHandle())
-                .setAccountRole(AccountRole.ROLE_USER);
-        toSave = accountRepository.save(toSave);
-        TokenResponse result = sessionService.newSession(toSave, true);
+                .setEmail(request.getEmail());
+        student.setAccountRole(AccountRole.ROLE_USER);
+        student = studentRepository.save(student);
+        TokenResponse result = sessionService.newSession(student, true);
         userServiceClient.createNewProfile(new ProfileCreateRequest()
                 .setEmail(request.getEmail())
-                .setId(toSave.getUserId())
+                .setId(student.getUserId())
                 .setNickname(request.getNickname())
                 .setTelegramHandle(request.getTelegramHandle()));
         return result;
@@ -39,26 +39,26 @@ public class AccountService {
 
     @Transactional
     public TokenResponse createNewAccount(SignUpRequest request) {
-        AccountEntity toSave = new AccountEntity()
+        StudentEntity student = new StudentEntity()
                 .setEmail(request.getEmail())
-                .setHashedPassword(encoder.encode(request.getPassword()))
-                .setAccountRole(AccountRole.ROLE_USER);
-        toSave = accountRepository.save(toSave);
-        TokenResponse result = sessionService.newSession(toSave, false);
+                .setHashedPassword(encoder.encode(request.getPassword()));
+        student.setAccountRole(AccountRole.ROLE_USER);
+        student = studentRepository.save(student);
+        TokenResponse result = sessionService.newSession(student, false);
         userServiceClient.createNewProfile(new ProfileCreateRequest()
                 .setEmail(request.getEmail())
-                .setId(toSave.getUserId())
+                .setId(student.getUserId())
                 .setNickname(request.getNickname()));
         return result;
     }
 
     @Transactional
-    public TokenResponse newSessionWithTelegram(AccountEntity accountEntity, String telegramHandle) {
-        TokenResponse result = sessionService.newSession(accountEntity, true);
-        if (!accountEntity.getTelegramHandle().equals(telegramHandle)) {
-            accountEntity.setTelegramHandle(telegramHandle);
-            accountRepository.save(accountEntity);
-            userServiceClient.propagateHandle(accountEntity.getUserId(), telegramHandle);
+    public TokenResponse newSessionWithTelegram(StudentEntity entity, String telegramHandle) {
+        TokenResponse result = sessionService.newSession(entity, true);
+        if (!entity.getTelegramHandle().equals(telegramHandle)) {
+            entity.setTelegramHandle(telegramHandle);
+            studentRepository.save(entity);
+            userServiceClient.propagateHandle(entity.getUserId(), telegramHandle);
         }
         return result;
     }

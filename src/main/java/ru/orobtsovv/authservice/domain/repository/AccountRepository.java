@@ -11,12 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer> {
-    Optional<AccountEntity> findByEmail(String email);
 
-    @Query("update AccountEntity a " +
-            "set a.hashedPassword = :hashedPassword " +
-            "where a.email = :email")
-    @Modifying
-    @Transactional
-    int updatePassword(String email, String hashedPassword);
 }

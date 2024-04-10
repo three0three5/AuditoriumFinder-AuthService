@@ -12,6 +12,7 @@ import ru.orobtsovv.authservice.exception.SimpleExceptionMessagesCreator;
 import ru.orobtsovv.authservice.exception.account.AccountException;
 import ru.orobtsovv.authservice.exception.account.BannedException;
 import ru.orobtsovv.authservice.exception.account.RefreshExpiredException;
+import ru.orobtsovv.authservice.exception.account.WrongRoleException;
 import ru.orobtsovv.authservice.exception.email.EmailException;
 
 import java.util.Map;
@@ -53,5 +54,11 @@ public class GlobalExceptionHandler {
                 .setMessage(e.getMessage())
                 .setBannedUntil(e.getBannedUntil())
                 .setReason(e.getReason());
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(WrongRoleException.class)
+    public CommonDTO handleWrongRoleException(WrongRoleException e) {
+        return new CommonDTO(e.getMessage());
     }
 }

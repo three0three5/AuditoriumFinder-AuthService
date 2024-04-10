@@ -7,6 +7,7 @@ import ru.orobtsovv.authservice.controller.RoleAccessController;
 import ru.orobtsovv.authservice.dto.request.ClientCredentialsRequest;
 import ru.orobtsovv.authservice.dto.response.JwtTokenResponse;
 import ru.orobtsovv.authservice.dto.response.TokenResponse;
+import ru.orobtsovv.authservice.service.impl.AccessService;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,12 +15,12 @@ public class RoleAccessControllerImpl implements RoleAccessController {
     private final AccessService service;
 
     @Override
-    public ResponseEntity<JwtTokenResponse> getAccessForModerator(ClientCredentialsRequest request) {
+    public ResponseEntity<TokenResponse> getAccessForModerator(ClientCredentialsRequest request) {
         return ResponseEntity.ok(service.moderator(request));
     }
 
     @Override
-    public ResponseEntity<TokenResponse> getAccessForTelegramBot(ClientCredentialsRequest request) {
+    public ResponseEntity<JwtTokenResponse> getAccessForTelegramBot(ClientCredentialsRequest request) {
         return ResponseEntity.ok(service.telegram(request));
     }
 }

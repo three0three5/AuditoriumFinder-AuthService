@@ -1,13 +1,15 @@
 package ru.orobtsovv.authservice.domain.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +22,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "student")
-public class StudentEntity {
-    @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "userid", referencedColumnName="userid")
-    private AccountEntity userId;
-
+public class StudentEntity extends AccountEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 

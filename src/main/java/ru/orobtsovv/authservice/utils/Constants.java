@@ -20,4 +20,5 @@ public class Constants {
     public static final String INVALID_DATE_MESSAGE = "Invalid bannedUntil date";
     public static final String PASSWORD_UPDATED_RESPONSE = "Пароль обновлен";
     public static final String BANNED_MESSAGE = "Аккаунт заблокирован модератором";
+    public static final String WRONG_ROLE = "Доступ запрещен";
 }

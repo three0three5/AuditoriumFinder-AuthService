@@ -13,7 +13,7 @@ public interface RefreshRepository extends JpaRepository<RefreshTokenEntity, Str
     @Modifying
     @Transactional
     @Query("delete from RefreshTokenEntity r " +
-            "where r.isTelegramSession " +
+            "where r.isUniqueSession " +
             "and r.accountEntity.userId = :userid " +
             "and r.usedAt is null " +
             "and r.validUntil > current_timestamp")

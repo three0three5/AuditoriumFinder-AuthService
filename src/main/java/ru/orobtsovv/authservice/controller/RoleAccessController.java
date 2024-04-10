@@ -13,8 +13,8 @@ import ru.orobtsovv.authservice.dto.response.TokenResponse;
 @RequestMapping("/access")
 public interface RoleAccessController {
     @PostMapping("/moderator")
-    ResponseEntity<JwtTokenResponse> getAccessForModerator(@RequestBody ClientCredentialsRequest request);
+    ResponseEntity<TokenResponse> getAccessForModerator(@RequestBody ClientCredentialsRequest request);
 
     @PostMapping("/tgbot")
-    ResponseEntity<TokenResponse> getAccessForTelegramBot(@RequestBody ClientCredentialsRequest request);
+    ResponseEntity<JwtTokenResponse> getAccessForTelegramBot(@RequestBody ClientCredentialsRequest request);
 }
