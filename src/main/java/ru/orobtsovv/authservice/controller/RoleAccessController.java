@@ -9,7 +9,7 @@ import ru.orobtsovv.authservice.dto.request.ClientCredentialsRequest;
 import ru.orobtsovv.authservice.dto.response.JwtTokenResponse;
 import ru.orobtsovv.authservice.dto.response.TokenResponse;
 
-@Tag(name = "Refresh API")
+@Tag(name = "Role Access API")
 @RequestMapping("/access")
 public interface RoleAccessController {
     @PostMapping("/moderator")

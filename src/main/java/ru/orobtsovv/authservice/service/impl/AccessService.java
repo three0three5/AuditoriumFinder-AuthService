@@ -43,4 +43,25 @@ public class AccessService {
         return new JwtTokenResponse()
                 .setJwt(jwtService.createJwt(entity.getUserId(), List.of(role.name())));
     }
+
+    public void createModerator() { // только для тестирования
+        createGranted(AccountRole.ROLE_MODERATOR);
+    }
+
+
+    public void createTg() { // только для тестирования
+        createGranted(AccountRole.ROLE_TG_SERVICE);
+    }
+
+    public void createGranted(AccountRole role) {
+        ExternalEntity entity = new ExternalEntity();
+        entity.setAccountRole(role);
+        String clientId = RandomStringGenerator.generateRandomString(10);
+        log.info("client id: %s\n".formatted(clientId));
+        entity.setClientId(clientId);
+        String clientSecret = RandomStringGenerator.generateRandomString(10);
+        log.info("client secret: %s\n".formatted(clientSecret));
+        entity.setClientSecret(encoder.encode(clientSecret));
+        repository.save(entity);
+    }
 }

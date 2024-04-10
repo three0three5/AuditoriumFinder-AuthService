@@ -2,6 +2,7 @@ package ru.orobtsovv.authservice.controller.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.orobtsovv.authservice.controller.RoleAccessController;
 import ru.orobtsovv.authservice.dto.request.ClientCredentialsRequest;
@@ -22,5 +23,15 @@ public class RoleAccessControllerImpl implements RoleAccessController {
     @Override
     public ResponseEntity<JwtTokenResponse> getAccessForTelegramBot(ClientCredentialsRequest request) {
         return ResponseEntity.ok(service.telegram(request));
+    }
+
+    @PostMapping("/grantModerator") // только для тестирования
+    public void grantModerator() {
+        service.createModerator();
+    }
+
+    @PostMapping("/grantTg") // только для тестирования
+    public void grantTg() {
+        service.createTg();
     }
 }
