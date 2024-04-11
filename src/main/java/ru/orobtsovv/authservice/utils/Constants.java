@@ -21,4 +21,6 @@ public class Constants {
     public static final String PASSWORD_UPDATED_RESPONSE = "Пароль обновлен";
     public static final String BANNED_MESSAGE = "Аккаунт заблокирован модератором";
     public static final String WRONG_ROLE = "Доступ запрещен";
+    public static final String EMAIL_CODE_MESSAGE_TEXT = "Код подтверждения: %s";
+    public static final String EMAIL_CODE_SUBJECT = "Код подтверждения AuditoriumFinder";
 }
