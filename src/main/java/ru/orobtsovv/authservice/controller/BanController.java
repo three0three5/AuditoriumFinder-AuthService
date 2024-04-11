@@ -20,7 +20,7 @@ public interface BanController {
     @Operation(summary = "Удаление пользователя из забаненных",
             description = "Почта пользователя выносится из черного списка.")
     ResponseEntity<Void> unbanUser(
-            @RequestHeader int moderatorId,
+            @RequestHeader(name = "userid") int moderatorId,
             @RequestParam String email);
 
     @GetMapping("/")
