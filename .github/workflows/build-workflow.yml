@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "release" ]
-    types: [opened, closed]
+    types: [closed]
 
 env:
   docker-tag: ${{ github.head_ref || github.ref_name }}-${GITHUB_SHA::7}
@@ -51,8 +51,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run Maven clean package
-        run: mvn clean package
+      - name: Run Maven clean install
+        run: mvn clean install
 
       - name: Build Docker image
         run: docker build --tag ${{ secrets.DOCKERHUB_USERNAME }}/audf-authservice:${{ env.docker-tag }} .
