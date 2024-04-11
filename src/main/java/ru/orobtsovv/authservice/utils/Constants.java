@@ -23,4 +23,5 @@ public class Constants {
     public static final String WRONG_ROLE = "Доступ запрещен";
     public static final String EMAIL_CODE_MESSAGE_TEXT = "Код подтверждения: %s";
     public static final String EMAIL_CODE_SUBJECT = "Код подтверждения AuditoriumFinder";
+    public static final String EMAIL_SENDER_EXCEPTION = "Ошибка при отправке кода: сервис электронной почты не отвечает";
 }
