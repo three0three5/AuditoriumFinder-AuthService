@@ -23,7 +23,6 @@ import ru.orobtsovv.authservice.domain.redis.EmailCodeRepository;
 import ru.orobtsovv.authservice.dto.CommonDTO;
 import ru.orobtsovv.authservice.dto.request.EmailRequest;
 import ru.orobtsovv.authservice.dto.request.SignUpRequest;
-import ru.orobtsovv.authservice.service.impl.EmailCodeService;
 
 import java.util.Optional;
 
