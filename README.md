@@ -4,8 +4,8 @@
 
 SPRING_PROFILE - опционально; основные значения: with-mocks, development, email-mock;
 
-- email-mock - сервис отправки email заменяется на заглушку (по умолч.)
-- development - без заглушек
+- email-mock - сервис отправки email заменяется на заглушку
+- development - без заглушек (по умолч.)
 
 EMAIL_CODE_LIFESPAN - по умолчанию 60 (изм. в секундах)
 
@@ -25,7 +25,7 @@ REDIS_HOST, REDIS_PORT
 
 RABBITMQ_HOST, RABBITMQ_PORT - хост и порт rabbitmq; по умолчанию localhost и 5672
 
-EMAIL_SENDER_URL - обязательно, если не используется with-mocks или email-mock значение SPRING_PROFILE, иначе
+EMAIL_SENDER_URL - обязательно, если не используется email-mock значение SPRING_PROFILE, иначе
 не используется
 
 #### Пример запуска требуемых контейнеров

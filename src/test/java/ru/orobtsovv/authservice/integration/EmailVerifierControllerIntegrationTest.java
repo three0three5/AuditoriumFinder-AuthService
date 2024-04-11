@@ -32,6 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static ru.orobtsovv.authservice.utils.Constants.EMAIL_CODE_SENT;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -98,7 +100,7 @@ public class EmailVerifierControllerIntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals("Код отправлен", response.getBody().getMessage());
+        assertEquals(EMAIL_CODE_SENT, response.getBody().getMessage());
     }
 
     @Test
@@ -117,6 +119,26 @@ public class EmailVerifierControllerIntegrationTest {
         Optional<EmailCodeEntity> entity = emailCodeRepository.findById(email);
         assertTrue(entity.isPresent());
         assertEquals(email, entity.get().getEmail());
+    }
+
+    @Test
+    void givenEmail_whenSendVerificationCode_thenCodeSent() {
+        final String email = "awevawchuiwecljakds@hse.ru";
+
+        EmailRequest request = new EmailRequest();
+        request.setEmail(email);
+        ResponseEntity<CommonDTO> response = restTemplate.postForEntity(
+                baseUrl + "/confirm", request, CommonDTO.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(EMAIL_CODE_SENT, response.getBody().getMessage());
+
+        Optional<EmailCodeEntity> entity = emailCodeRepository.findById(email);
+        assertTrue(entity.isPresent());
+        assertEquals(email, entity.get().getEmail());
+
+        verify(client).send(eq(email), eq(entity.get().getCode()));
     }
 
     @Test
