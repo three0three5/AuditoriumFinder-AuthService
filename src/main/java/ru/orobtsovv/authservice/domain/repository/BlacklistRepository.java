@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface BlacklistRepository extends JpaRepository<BannedEmailEntity, String> {
     @Query("select b from BannedEmailEntity as b " +
             "where b.email=:email and " +
-            "(b.bannedUntil is null or b.bannedUntil < current_timestamp)")
-    Optional<BannedEmailEntity> findValidByEmail(String email);
+            "(b.bannedUntil is null or b.bannedUntil > current_timestamp)")
+    Optional<BannedEmailEntity> findBlacklisted(String email);
 }

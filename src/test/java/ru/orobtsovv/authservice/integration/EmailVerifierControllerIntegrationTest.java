@@ -22,11 +22,15 @@ import ru.orobtsovv.authservice.domain.entity.EmailCodeEntity;
 import ru.orobtsovv.authservice.domain.redis.EmailCodeRepository;
 import ru.orobtsovv.authservice.dto.CommonDTO;
 import ru.orobtsovv.authservice.dto.request.EmailRequest;
+import ru.orobtsovv.authservice.exception.email.EmailCodeExpiredException;
+import ru.orobtsovv.authservice.exception.email.EmailCodeNotValidException;
+import ru.orobtsovv.authservice.service.impl.EmailCodeService;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.orobtsovv.authservice.utils.Constants.EMAIL_CODE_SENT;
 
@@ -74,6 +78,8 @@ public class EmailVerifierControllerIntegrationTest {
     private EmailSenderClient client;
     @Autowired
     private EmailCodeRepository emailCodeRepository;
+    @Autowired
+    EmailCodeService emailCodeService;
 
     @BeforeEach
     public void setUp() {
@@ -111,5 +117,90 @@ public class EmailVerifierControllerIntegrationTest {
         Optional<EmailCodeEntity> entity = emailCodeRepository.findById(email);
         assertTrue(entity.isPresent());
         assertEquals(email, entity.get().getEmail());
+    }
+
+    @Test
+    void givenSentCode_whenVerify_thenNoExceptionThrown() {
+        final String email = "smthn@hse.ru";
+
+        EmailRequest request = new EmailRequest();
+        request.setEmail(email);
+        ResponseEntity<CommonDTO> response = restTemplate.postForEntity(
+                baseUrl + "/confirm", request, CommonDTO.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(EMAIL_CODE_SENT, response.getBody().getMessage());
+
+        Optional<EmailCodeEntity> entity = emailCodeRepository.findById(email);
+        assertTrue(entity.isPresent());
+        assertEquals(email, entity.get().getEmail());
+
+        emailCodeService.verifyEmail(email, entity.get().getCode());
+    }
+
+    @Test
+    void givenSentCode_whenVerifyTwice_thenExceptionThrown() {
+        final String email = "smthn@hse.ru";
+
+        EmailRequest request = new EmailRequest();
+        request.setEmail(email);
+        ResponseEntity<CommonDTO> response = restTemplate.postForEntity(
+                baseUrl + "/confirm", request, CommonDTO.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(EMAIL_CODE_SENT, response.getBody().getMessage());
+
+        Optional<EmailCodeEntity> entity = emailCodeRepository.findById(email);
+        assertTrue(entity.isPresent());
+        assertEquals(email, entity.get().getEmail());
+
+        emailCodeService.verifyEmail(email, entity.get().getCode());
+        assertThrows(EmailCodeExpiredException.class,
+                () -> emailCodeService.verifyEmail(email, entity.get().getCode()));
+    }
+
+    @Test
+    void givenEmail_whenSendTwice_thenExceptionThrown() {
+        final String email = "awdadawdawdawd@hse.ru";
+
+        EmailRequest request = new EmailRequest();
+        request.setEmail(email);
+        ResponseEntity<CommonDTO> response = restTemplate.postForEntity(
+                baseUrl + "/confirm", request, CommonDTO.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(EMAIL_CODE_SENT, response.getBody().getMessage());
+
+        Optional<EmailCodeEntity> entity = emailCodeRepository.findById(email);
+        assertTrue(entity.isPresent());
+        assertEquals(email, entity.get().getEmail());
+
+        response = restTemplate.postForEntity(
+                baseUrl + "/confirm", request, CommonDTO.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    void givenCodeSent_whenCodeWrongVerify_thenExceptionThrown() {
+        final String email = "fsdrvser@hse.ru";
+
+        EmailRequest request = new EmailRequest();
+        request.setEmail(email);
+        ResponseEntity<CommonDTO> response = restTemplate.postForEntity(
+                baseUrl + "/confirm", request, CommonDTO.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(EMAIL_CODE_SENT, response.getBody().getMessage());
+
+        Optional<EmailCodeEntity> entity = emailCodeRepository.findById(email);
+        assertTrue(entity.isPresent());
+        assertEquals(email, entity.get().getEmail());
+
+        assertThrows(EmailCodeNotValidException.class,
+                () -> emailCodeService.verifyEmail(email, "; drop table users"));
     }
 }
